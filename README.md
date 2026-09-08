@@ -2,6 +2,10 @@
 
 A production-grade, evidence-led descriptive analytics dashboard and intelligence platform for EduPro. This system audits, cleans, validates, and visualizes platform user demographics, course catalog dynamics, and transaction histories to empower educational leaders, marketing teams, curriculum planners, and policy stakeholders.
 
+## Live Application
+
+Explore the deployed dashboard: [EduPro Learner Intelligence on Streamlit](https://edupro-ilqcncbfmudr7qqjv8uit3.streamlit.app/)
+
 ---
 
 ## 🌟 Key Features
