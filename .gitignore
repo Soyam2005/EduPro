@@ -1,0 +1,13 @@
+# Project documents not intended for the repository
+/docs/
+
+# Python caches and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local environment files
+.env
+.venv/
+venv/
+env/
