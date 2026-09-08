@@ -48,7 +48,7 @@ EDU PRO/
     ├── Rules.md                  # Scope boundaries, privacy, and engineering rules
     ├── 4.Phases.md               # Delivery phases and exit criteria
     ├── Memory.md                 # Session handoff and active implementation status
-    ├── research_report.md        # Comprehensive EDA research paper with strategic insights
+    ├── research_paper.md         # Comprehensive EDA research paper with strategic insights
     └── executive_summary.md      # High-level policy brief for government leadership
 ```
 
@@ -91,6 +91,6 @@ The application will launch locally at `http://localhost:8501`.
 ## 📄 Deliverables Summary
 
 - **Streamlit Interactive Application:** `streamlit_app.py`
-- **Exploratory Data Analysis Report:** `docs/research_report.md`
+- **Exploratory Data Analysis Report:** `docs/research_paper.md`
 - **Government / Leadership Executive Summary:** `docs/executive_summary.md`
 - **Engineering Knowledge & Session Record:** `docs/Memory.md` and `Memory.md`

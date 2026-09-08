@@ -44,8 +44,8 @@ Build a Streamlit dashboard that provides descriptive learner intelligence for E
   - `README.md`
   - `src/__init__.py`, `src/constants.py`, `src/data_loader.py`, `src/transforms.py`, `src/metrics.py`, `src/charts.py`
   - `tests/__init__.py`, `tests/conftest.py`, `tests/test_transforms.py`, `tests/test_metrics.py`
-  - `docs/research_report.md`, `docs/executive_summary.md`, `docs/Memory.md`
-  - `Memory.md`
+  - `docs/research_report.md`, `docs/executive_summary.md`, `docs/research_paper.md`, `docs/Memory.md`
+  - `research_paper.md`, `Memory.md`
 - **Validation performed:**
   - `pytest -v`: 14 passed in 0.59s (100% pass rate).
   - Python pipeline audit on real data: 10,000 transactions joined, 0 orphans, accurate aggregates verified.
