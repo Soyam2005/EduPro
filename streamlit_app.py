@@ -937,6 +937,29 @@ st.markdown(
         box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
     }}
 
+    /* Force all text inside expander to use theme text colors (fixes dark mode visibility) */
+    div[data-testid="stExpander"] p,
+    div[data-testid="stExpander"] span,
+    div[data-testid="stExpander"] div,
+    div[data-testid="stExpander"] label,
+    div[data-testid="stExpander"] li,
+    div[data-testid="stExpander"] strong,
+    div[data-testid="stExpander"] b {{
+        color: {tc["text_primary"]} !important;
+    }}
+
+    div[data-testid="stExpander"] .stMarkdown p,
+    div[data-testid="stExpander"] .stMarkdown strong {{
+        color: {tc["text_primary"]} !important;
+    }}
+
+    /* Expander header/summary text */
+    div[data-testid="stExpander"] summary,
+    div[data-testid="stExpander"] summary span,
+    div[data-testid="stExpander"] summary p {{
+        color: {tc["text_primary"]} !important;
+    }}
+
     /* Sidebar slide-in animation */
     @keyframes sidebarSlideIn {{
         0% {{
