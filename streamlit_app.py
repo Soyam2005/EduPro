@@ -1,6 +1,7 @@
 """EduPro Learner Intelligence Dashboard — Streamlit entry point and UI orchestration."""
 
 import os
+import textwrap
 import streamlit as st
 import pandas as pd
 
@@ -90,8 +91,311 @@ st.markdown(
     }}
 
     /* ═══════════════════════════════════════════════════════════
+       CINEMATIC OPENING ANIMATION & SPLASH OVERLAY
+    ═══════════════════════════════════════════════════════════ */
+    @keyframes splashFadeOut {{
+        0% {{
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }}
+        75% {{
+            opacity: 0.95;
+        }}
+        100% {{
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.04);
+            pointer-events: none;
+        }}
+    }}
+
+    .edupro-splash-overlay {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999999;
+        background: radial-gradient(ellipse at center, #0B132B 0%, #030712 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        cursor: pointer;
+        animation: splashFadeOut 0.75s cubic-bezier(0.16, 1, 0.3, 1) 2.8s both;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+    }}
+
+    .splash-skip-btn {{
+        position: absolute;
+        top: 24px;
+        right: 28px;
+        padding: 6px 14px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #94A3B8;
+        font-size: 11.5px;
+        font-weight: 600;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: all 0.2s ease;
+        z-index: 20;
+    }}
+    .splash-skip-btn:hover {{
+        background: rgba(255, 255, 255, 0.16);
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.3);
+    }}
+
+    /* Ambient glow auras */
+    .splash-ambient-aura {{
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        pointer-events: none;
+    }}
+    .splash-aura-1 {{
+        width: 380px;
+        height: 380px;
+        background: rgba(99, 102, 241, 0.35);
+        top: 20%;
+        left: 30%;
+        animation: auraFloat1 6s ease-in-out infinite alternate;
+    }}
+    .splash-aura-2 {{
+        width: 320px;
+        height: 320px;
+        background: rgba(6, 182, 212, 0.30);
+        bottom: 25%;
+        right: 32%;
+        animation: auraFloat2 7s ease-in-out infinite alternate;
+    }}
+    .splash-aura-3 {{
+        width: 260px;
+        height: 260px;
+        background: rgba(244, 63, 94, 0.22);
+        top: 55%;
+        left: 45%;
+        animation: auraFloat3 8s ease-in-out infinite alternate;
+    }}
+
+    @keyframes auraFloat1 {{
+        0% {{ transform: translate(0, 0) scale(1); }}
+        100% {{ transform: translate(40px, -30px) scale(1.15); }}
+    }}
+    @keyframes auraFloat2 {{
+        0% {{ transform: translate(0, 0) scale(1); }}
+        100% {{ transform: translate(-35px, 25px) scale(1.2); }}
+    }}
+    @keyframes auraFloat3 {{
+        0% {{ transform: translate(0, 0) scale(0.9); }}
+        100% {{ transform: translate(25px, 35px) scale(1.1); }}
+    }}
+
+    .splash-content {{
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        animation: splashContentRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }}
+
+    @keyframes splashContentRise {{
+        0% {{
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }}
+    }}
+
+    /* Badge Orbit */
+    .splash-badge-container {{
+        position: relative;
+        width: 110px;
+        height: 110px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }}
+
+    .splash-orbit-ring {{
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 2px dashed rgba(99, 102, 241, 0.55);
+        animation: splashRingSpin 10s linear infinite;
+    }}
+
+    .splash-orbit-ring-inner {{
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+        border: 1.5px solid transparent;
+        border-top: 2px solid #06B6D4;
+        border-right: 2px solid #6366F1;
+        animation: splashRingSpinReverse 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }}
+
+    @keyframes splashRingSpin {{
+        0% {{ transform: rotate(0deg); }}
+        100% {{ transform: rotate(360deg); }}
+    }}
+    @keyframes splashRingSpinReverse {{
+        0% {{ transform: rotate(360deg); }}
+        100% {{ transform: rotate(0deg); }}
+    }}
+
+    .splash-badge-core {{
+        width: 90px;
+        height: 90px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, #4F46E5, #06B6D4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 36px rgba(99, 102, 241, 0.5), 0 0 20px rgba(6, 182, 212, 0.35);
+        animation: splashCorePulse 2.4s ease-in-out infinite;
+    }}
+
+    @keyframes splashCorePulse {{
+        0%, 100% {{
+            transform: scale(1);
+            box-shadow: 0 12px 36px rgba(99, 102, 241, 0.5), 0 0 20px rgba(6, 182, 212, 0.35);
+        }}
+        50% {{
+            transform: scale(1.05);
+            box-shadow: 0 16px 48px rgba(99, 102, 241, 0.7), 0 0 35px rgba(6, 182, 212, 0.6);
+        }}
+    }}
+
+    .splash-badge-icon {{
+        font-size: 42px;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+    }}
+
+    .splash-brand-title {{
+        font-size: 38px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        margin: 0;
+        background: linear-gradient(135deg, #FFFFFF 20%, #A5B4FC 60%, #67E8F9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.1;
+    }}
+
+    .splash-brand-subtitle {{
+        font-size: 13px;
+        font-weight: 700;
+        color: #94A3B8;
+        text-transform: uppercase;
+        letter-spacing: 2.8px;
+        margin-top: 8px;
+        margin-bottom: 22px;
+    }}
+
+    .splash-status-pill {{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        margin-bottom: 22px;
+    }}
+
+    .splash-status-dot {{
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10B981;
+        box-shadow: 0 0 10px #10B981, 0 0 0 2px rgba(16, 185, 129, 0.3);
+        animation: statusBlink 1.2s ease-in-out infinite alternate;
+    }}
+
+    @keyframes statusBlink {{
+        0% {{ opacity: 0.5; transform: scale(0.85); }}
+        100% {{ opacity: 1; transform: scale(1.15); }}
+    }}
+
+    .splash-status-text {{
+        font-size: 12px;
+        font-weight: 600;
+        color: #E2E8F0;
+        letter-spacing: 0.3px;
+    }}
+
+    .splash-progress-track {{
+        width: 260px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 99px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }}
+
+    .splash-progress-fill {{
+        height: 100%;
+        width: 0%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #6366F1, #06B6D4, #F43F5E);
+        animation: splashFillTrack 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        position: relative;
+    }}
+
+    @keyframes splashFillTrack {{
+        0% {{ width: 0%; }}
+        40% {{ width: 55%; }}
+        75% {{ width: 85%; }}
+        100% {{ width: 100%; }}
+    }}
+
+    .splash-progress-sparkle {{
+        position: absolute;
+        right: 0;
+        top: -2px;
+        bottom: -2px;
+        width: 14px;
+        background: #FFFFFF;
+        border-radius: 50%;
+        box-shadow: 0 0 12px #FFFFFF, 0 0 20px #06B6D4;
+    }}
+
+    .splash-skip-hint {{
+        margin-top: 18px;
+        font-size: 11.5px;
+        font-weight: 500;
+        color: #64748B;
+        letter-spacing: 0.5px;
+        opacity: 0.8;
+    }}
+
+    /* ═══════════════════════════════════════════════════════════
        HERO BANNER & HEADER
     ═══════════════════════════════════════════════════════════ */
+    @keyframes heroDropIn {{
+        0% {{
+            opacity: 0;
+            transform: translateY(-22px) scale(0.98);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }}
+    }}
+
     .hero-banner {{
         background: linear-gradient(135deg, {tc["surface"]}, {tc["observation_bg"]});
         border: 1px solid {tc["border"]};
@@ -104,6 +408,7 @@ st.markdown(
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         position: relative;
         overflow: hidden;
+        animation: heroDropIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
     }}
 
     .hero-banner::before {{
@@ -144,9 +449,15 @@ st.markdown(
         0%, 100% {{ transform: scale(1) translate(0,0); opacity: 0.55; }}
         50%       {{ transform: scale(1.12) translate(4px,-6px); opacity: 0.75; }}
     }}
-    @keyframes kpi-fade-up {{
-        from {{ opacity: 0; transform: translateY(12px); }}
-        to   {{ opacity: 1; transform: translateY(0); }}
+    @keyframes kpiCascade {{
+        0% {{
+            opacity: 0;
+            transform: translateY(22px) scale(0.96);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }}
     }}
 
     .kpi-card {{
@@ -165,8 +476,13 @@ st.markdown(
         transition: transform 0.32s cubic-bezier(0.16,1,0.3,1),
                     box-shadow 0.32s cubic-bezier(0.16,1,0.3,1),
                     border-color 0.32s ease;
-        animation: kpi-fade-up 0.55s ease both;
+        animation: kpiCascade 0.65s cubic-bezier(0.16,1,0.3,1) both;
     }}
+
+    .kpi-card-anim-1 {{ animation-delay: 0.10s !important; }}
+    .kpi-card-anim-2 {{ animation-delay: 0.20s !important; }}
+    .kpi-card-anim-3 {{ animation-delay: 0.30s !important; }}
+    .kpi-card-anim-4 {{ animation-delay: 0.40s !important; }}
 
     .kpi-card::before {{
         content: '';
@@ -405,6 +721,17 @@ st.markdown(
     /* ═══════════════════════════════════════════════════════════
        SECTION CARDS (CONTAINERS)
     ═══════════════════════════════════════════════════════════ */
+    @keyframes sectionReveal {{
+        0% {{
+            opacity: 0;
+            transform: translateY(20px);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0);
+        }}
+    }}
+
     div[data-testid="stVerticalBlockBorderWrapper"] {{
         background-color: {tc["surface"]} !important;
         border: 1px solid {tc["border"]} !important;
@@ -413,7 +740,13 @@ st.markdown(
         margin-bottom: 26px !important;
         position: relative;
         overflow: hidden;
+        animation: sectionReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both !important;
     }}
+
+    div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(1) {{ animation-delay: 0.22s !important; }}
+    div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(2) {{ animation-delay: 0.34s !important; }}
+    div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(3) {{ animation-delay: 0.46s !important; }}
+    div[data-testid="stVerticalBlockBorderWrapper"]:nth-of-type(4) {{ animation-delay: 0.58s !important; }}
 
     div[data-testid="stVerticalBlockBorderWrapper"] > div {{
         padding: 24px 28px 22px !important;
@@ -604,19 +937,77 @@ st.markdown(
         box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
     }}
 
+    /* Sidebar slide-in animation */
+    @keyframes sidebarSlideIn {{
+        0% {{
+            opacity: 0;
+            transform: translateX(-24px);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateX(0);
+        }}
+    }}
+
     /* Sidebar */
     section[data-testid="stSidebar"] {{
         background-color: {tc["sidebar_bg"]} !important;
         border-right: 1px solid {tc["sidebar_border"]} !important;
+        animation: sidebarSlideIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
     }}
     
     section[data-testid="stSidebar"] > div {{
         background-color: {tc["sidebar_bg"]} !important;
     }}
+
+    @media (prefers-reduced-motion: reduce) {{
+        .edupro-splash-overlay {{
+            display: none !important;
+        }}
+        .hero-banner, .kpi-card, div[data-testid="stVerticalBlockBorderWrapper"], section[data-testid="stSidebar"] {{
+            animation: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+        }}
+    }}
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+# Cinematic opening animation rendered as soon as site opens
+splash_html = (
+    '<div id="edupro-intro-splash" class="edupro-splash-overlay" onclick="this.style.opacity=\'0\'; setTimeout(() => this.style.display=\'none\', 350);">'
+    '<div class="splash-ambient-aura splash-aura-1"></div>'
+    '<div class="splash-ambient-aura splash-aura-2"></div>'
+    '<div class="splash-ambient-aura splash-aura-3"></div>'
+    '<div class="splash-skip-btn" onclick="document.getElementById(\'edupro-intro-splash\').style.display=\'none\'; event.stopPropagation();">Skip Intro ✕</div>'
+    '<div class="splash-content">'
+    '<div class="splash-badge-container">'
+    '<div class="splash-orbit-ring"></div>'
+    '<div class="splash-orbit-ring-inner"></div>'
+    '<div class="splash-badge-core">'
+    '<span class="splash-badge-icon">🎓</span>'
+    '</div>'
+    '</div>'
+    '<div class="splash-brand-title">EduPro</div>'
+    '<div class="splash-brand-subtitle">Learner Intelligence Platform</div>'
+    '<div class="splash-status-pill">'
+    '<span class="splash-status-dot"></span>'
+    '<span class="splash-status-text">Calibrating Analytics • 10,000 Verified Records</span>'
+    '</div>'
+    '<div class="splash-progress-track">'
+    '<div class="splash-progress-fill">'
+    '<div class="splash-progress-sparkle"></div>'
+    '</div>'
+    '</div>'
+    '<div class="splash-skip-hint">Click anywhere to skip</div>'
+    '</div>'
+    '</div>'
+    '<img src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'></svg>" style="display:none;" '
+    'onload="if(window.__edupro_splash_played){var s=document.getElementById(\'edupro-intro-splash\');if(s)s.style.display=\'none\';}else{window.__edupro_splash_played=true;}" />'
+)
+st.markdown(splash_html, unsafe_allow_html=True)
 
 
 @st.cache_data(show_spinner="Loading and validating EduPro dataset...")
@@ -873,7 +1264,7 @@ with kpi1:
     enroll_val = kpis['total_enrollments']
     st.markdown(
         f"""
-        <div class="kpi-card kpi-card-blue">
+        <div class="kpi-card kpi-card-blue kpi-card-anim-1">
             <div class="kpi-top-row">
                 <div class="kpi-label">Total Enrollments</div>
                 <div class="kpi-icon-badge kpi-icon-blue">
@@ -905,7 +1296,7 @@ with kpi2:
     learner_val = kpis['active_learners']
     st.markdown(
         f"""
-        <div class="kpi-card kpi-card-teal">
+        <div class="kpi-card kpi-card-teal kpi-card-anim-2">
             <div class="kpi-top-row">
                 <div class="kpi-label">Active Learners</div>
                 <div class="kpi-icon-badge kpi-icon-teal">
@@ -938,7 +1329,7 @@ with kpi3:
     cat_share = min(100.0, max(0.0, float(kpis['leading_category_share'])))
     st.markdown(
         f"""
-        <div class="kpi-card kpi-card-purple">
+        <div class="kpi-card kpi-card-purple kpi-card-anim-3">
             <div class="kpi-top-row">
                 <div class="kpi-label">Leading Subject Category</div>
                 <div class="kpi-icon-badge kpi-icon-purple">
@@ -969,7 +1360,7 @@ with kpi4:
     lvl_share = min(100.0, max(0.0, float(kpis['leading_level_share'])))
     st.markdown(
         f"""
-        <div class="kpi-card kpi-card-amber">
+        <div class="kpi-card kpi-card-amber kpi-card-anim-4">
             <div class="kpi-top-row">
                 <div class="kpi-label">Dominant Difficulty Tier</div>
                 <div class="kpi-icon-badge kpi-icon-amber">

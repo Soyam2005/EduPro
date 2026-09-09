@@ -27,33 +27,24 @@ Build a Streamlit dashboard that provides descriptive learner intelligence for E
 
 ## Latest session
 
-- **Date:** September 5, 2026
+- **Date:** September 9, 2026
 - **Completed:**
-  - Implemented data pipeline (`src/data_loader.py`, `src/transforms.py`, `src/constants.py`) with schema validation and referential checks.
-  - Implemented metric engine (`src/metrics.py`) with zero-division safety and concentration metrics.
-  - Implemented visualization suite (`src/charts.py`) with Plotly Express/Graph Objects adhering to Design.md.
-  - Implemented comprehensive 14-test unit test suite (`tests/test_transforms.py`, `tests/test_metrics.py`).
-  - Built interactive Streamlit dashboard (`streamlit_app.py`) with responsive cards, 4 analytical modules, global filters, and reset actions.
-  - Configured `.streamlit/config.toml` and unified CSS styling to eliminate dark/white split, making the sidebar cohesive off-white with crisp border, dark high-contrast typography, and light blue pill badges.
-  - Produced Research Report (`docs/research_report.md`) answering all 5 core analytical questions.
-  - Produced Executive Policy Brief (`docs/executive_summary.md`) for government and institutional stakeholders.
-  - Produced documentation (`README.md`).
+  - Designed and implemented a cinematic opening animation splash overlay (`#edupro-intro-splash`) with rotating holographic orbital rings, pulsing glowing badge (`🎓`), gradient title typography, active telemetry status pill ("Calibrating Analytics • 10,000 Verified Records"), and animated loading bar with glowing sparkle head.
+  - Implemented staggered entrance cascade animations across all dashboard elements:
+    - Hero Banner: `@keyframes heroDropIn` (slide down + fade in).
+    - KPI Cards: `@keyframes kpiCascade` with staggered delays (0.10s, 0.20s, 0.30s, 0.40s).
+    - Section Cards (Containers 01 to 04): `@keyframes sectionReveal` with cascading nth-of-type delays.
+    - Sidebar: `@keyframes sidebarSlideIn` (smooth left slide-in).
+  - Added session state management (`play_intro_animation`, `has_opened_site`) ensuring the intro runs on initial site opening without obstructing subsequent filter selections.
+  - Added an interactive **"✨ Intro"** replay button in the header alongside the theme toggle for on-demand re-triggering, with instant skip controls ("Skip Intro ✕" & click-anywhere dismiss).
+  - Added `@media (prefers-reduced-motion: reduce)` accessibility query.
 - **Files changed / created:**
   - `streamlit_app.py`
-  - `requirements.txt`
-  - `README.md`
-  - `src/__init__.py`, `src/constants.py`, `src/data_loader.py`, `src/transforms.py`, `src/metrics.py`, `src/charts.py`
-  - `tests/__init__.py`, `tests/conftest.py`, `tests/test_transforms.py`, `tests/test_metrics.py`
-  - `docs/research_report.md`, `docs/executive_summary.md`, `docs/research_paper.md`, `docs/Memory.md`
-  - `research_paper.md`, `Memory.md`
+  - `docs/Memory.md`
 - **Validation performed:**
-  - `pytest -v`: 14 passed in 0.59s (100% pass rate).
-  - Python pipeline audit on real data: 10,000 transactions joined, 0 orphans, accurate aggregates verified.
-  - Browser subagent validation at `http://localhost:8501`: Verified all 4 KPI cards, 4 analytical modules, dynamic filtering by Gender (`Female`), reactive recalculations, and 'Reset All Filters' restoration.
-- **Data assumptions or decisions:**
-  - Verified that transaction dates are in 2025 and user ages are between 15 and 35. Bands `36–45` and `45+` have 0 platform enrollments in 2025.
-  - Read-only data isolation maintained in `data/raw/EduPro Online Platform.xlsx`.
+  - `pytest`: 15 passed in 0.36s (100% pass rate).
+  - End-to-end browser subagent validation: recorded and verified the active splash screen rendering, timer fade-out, cascading dashboard entrance, and replay trigger.
 - **Known issues / blockers:**
-  - None. System is stable and fully functional.
+  - None. System is completely stable.
 - **Next smallest task:**
-  - None. Ready for submission and stakeholder presentation.
+  - Ready for production presentation.
