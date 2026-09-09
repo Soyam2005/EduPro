@@ -46,14 +46,9 @@ EDU PRO/
 │   ├── test_transforms.py        # Transformation, schema, edge-case & join unit tests
 │   └── test_metrics.py           # Metric calculations, zero-division safety, filter tests
 └── docs/
-    ├── PRD.md                    # Product Requirements Document
-    ├── Architecture.md           # System architecture and data flow
-    ├── Design.md                 # Design system specifications and tokens
-    ├── Rules.md                  # Scope boundaries, privacy, and engineering rules
-    ├── 4.Phases.md               # Delivery phases and exit criteria
-    ├── Memory.md                 # Session handoff and active implementation status
-    ├── research_paper.md         # Comprehensive EDA research paper with strategic insights
-    └── executive_summary.md      # High-level policy brief for government leadership
+    ├── project/                  # Product, architecture, design, rules, and delivery plans
+    ├── research/                 # EDA research paper and executive summary
+    └── development/              # Implementation handoff and session notes
 ```
 
 ---
@@ -95,6 +90,6 @@ The application will launch locally at `http://localhost:8501`.
 ## 📄 Deliverables Summary
 
 - **Streamlit Interactive Application:** `streamlit_app.py`
-- **Exploratory Data Analysis Report:** `docs/research_paper.md`
-- **Government / Leadership Executive Summary:** `docs/executive_summary.md`
-- **Engineering Knowledge & Session Record:** `docs/Memory.md` and `Memory.md`
+- **Exploratory Data Analysis Report:** `docs/research/research_paper.md`
+- **Government / Leadership Executive Summary:** `docs/research/executive_summary.md`
+- **Engineering Knowledge & Session Record:** `docs/development/Memory.md`
