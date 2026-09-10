@@ -1000,11 +1000,11 @@ st.markdown(
 
 # Cinematic opening animation rendered as soon as site opens
 splash_html = (
-    '<div id="edupro-intro-splash" class="edupro-splash-overlay" onclick="this.style.opacity=\'0\'; setTimeout(() => this.style.display=\'none\', 350);">'
+    '<div id="edupro-intro-splash" class="edupro-splash-overlay">'
     '<div class="splash-ambient-aura splash-aura-1"></div>'
     '<div class="splash-ambient-aura splash-aura-2"></div>'
     '<div class="splash-ambient-aura splash-aura-3"></div>'
-    '<div class="splash-skip-btn" onclick="document.getElementById(\'edupro-intro-splash\').style.display=\'none\'; event.stopPropagation();">Skip Intro ✕</div>'
+    '<div class="splash-skip-btn" id="edupro-skip-btn">Skip Intro ✕</div>'
     '<div class="splash-content">'
     '<div class="splash-badge-container">'
     '<div class="splash-orbit-ring"></div>'
@@ -1027,10 +1027,32 @@ splash_html = (
     '<div class="splash-skip-hint">Click anywhere to skip</div>'
     '</div>'
     '</div>'
-    '<img src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'></svg>" style="display:none;" '
-    'onload="if(window.__edupro_splash_played){var s=document.getElementById(\'edupro-intro-splash\');if(s)s.style.display=\'none\';}else{window.__edupro_splash_played=true;}" />'
+    '<script>'
+    '(function() {'
+    '  function dismissSplash() {'
+    '    var el = document.getElementById("edupro-intro-splash");'
+    '    if (!el) return;'
+    '    el.style.transition = "opacity 0.35s ease, transform 0.35s ease";'
+    '    el.style.opacity = "0";'
+    '    el.style.transform = "scale(1.04)";'
+    '    setTimeout(function() { if (el) el.style.display = "none"; }, 380);'
+    '  }'
+    '  function init() {'
+    '    var overlay = document.getElementById("edupro-intro-splash");'
+    '    var skipBtn = document.getElementById("edupro-skip-btn");'
+    '    if (!overlay || !skipBtn) { setTimeout(init, 50); return; }'
+    '    skipBtn.addEventListener("click", function(e) { e.stopPropagation(); dismissSplash(); });'
+    '    overlay.addEventListener("click", function() { dismissSplash(); });'
+    '    if (window.__edupro_splash_played) { overlay.style.display = "none"; }'
+    '    else { window.__edupro_splash_played = true; }'
+    '  }'
+    '  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", init); }'
+    '  else { init(); }'
+    '})();'
+    '</script>'
 )
 st.markdown(splash_html, unsafe_allow_html=True)
+
 
 
 @st.cache_data(show_spinner="Loading and validating EduPro dataset...")
